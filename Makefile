@@ -23,6 +23,7 @@ makedirs:
 
 # stops all docker containers, not only the ones from the current compose file
 # not really necessary here, since we are in a machine with only this project.
+# But useful to stop potential other containers from older builds with other names etc.
 stopall:
 	@CONTAINERS=$$(docker ps -qa); \
 	if [ -n "$$CONTAINERS" ]; then \
@@ -30,7 +31,7 @@ stopall:
 		docker stop $$CONTAINERS; \
 	fi
 
-# this will fail if volumes are still in use. down-v is better
+# this will fail if volumes are still in use. it is just to clean up older volumes with other names from previous builds
 rmvolumes:
 	@VOLUMES=$$(docker volume ls --format '{{.Name}}'); \
 	if [ -n "$$VOLUMES" ]; then \
@@ -42,8 +43,7 @@ rmvolumes:
 re: down-v build
 
 #this rule is only ok because we are in a virtual machine that only contains this project
-nuke: stopall 
+nuke: down-v 
 	docker system prune --all --force
-	make rmvolumes
 	sudo rm -rf ~/data/mariadb/*
 	sudo rm -rf ~/data/wordpress/*
