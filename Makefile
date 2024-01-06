@@ -4,6 +4,14 @@ DC-FILE		=	srcs/docker-compose.yml
 COLOR	= \033[30m
 RESET	= \033[0m
 
+ifeq ($(shell uname), Linux)
+	HOMEPATH=/home/${USER}/data
+else
+	HOMEPATH=/Users/${USER}/data
+endif
+
+export HOMEPATH
+
 all: makedirs
 	docker-compose -f $(DC-FILE) up -d
 
@@ -34,7 +42,8 @@ stopall:
 		docker stop $$CONTAINERS; \
 	fi
 
-# this will fail if volumes are still in use. it is just to clean up older volumes with other names from previous builds
+# this will fail if volumes are still in use (that includes shutdown containers with bind volumes)
+# it is just to clean up orphan volumes with other names from previous builds
 rmvolumes:
 	@VOLUMES=$$(docker volume ls --format '{{.Name}}'); \
 	if [ -n "$$VOLUMES" ]; then \
@@ -46,14 +55,11 @@ rmdirs:
 	sudo rm -rf ~/data/mariadb/*
 	sudo rm -rf ~/data/wordpress/*
 
-# this doesn't remove as much as in c make files; I find "make re" more akin to "--build" in the context of docker
 re: down-v rmdirs build
 
-#this rule is only ok because we are in a virtual machine that only contains this project
-nuke: down-v 
+# this rule is only ok because we are in a virtual machine that only contains this project
+nuke: down-v rmdirs
 	docker system prune --all --force
-	sudo rm -rf ~/data/mariadb/*
-	sudo rm -rf ~/data/wordpress/*
 
 git:
 	git add .
