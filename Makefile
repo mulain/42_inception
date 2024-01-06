@@ -39,8 +39,12 @@ rmvolumes:
 		docker volume rm -f $$VOLUMES; \
 	fi
 
+rmdirs:
+	sudo rm -rf ~/data/mariadb/*
+	sudo rm -rf ~/data/wordpress/*
+
 # this doesn't remove as much as in c make files; I find "make re" more akin to "--build" in the context of docker
-re: down-v build
+re: down-v rmdirs build
 
 #this rule is only ok because we are in a virtual machine that only contains this project
 nuke: down-v 
