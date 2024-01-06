@@ -6,6 +6,7 @@ services:
       context: .
       dockerfile: requirements/nginx/Dockerfile
     container_name: nginx
+    image: nginx
     depends_on:
       - wordpress
     ports:
@@ -28,6 +29,7 @@ services:
         DB_PASS: ${DB_PASS}
         DB_ROOT: ${DB_ROOT}
     container_name: mariadb
+    image: mariadb
     ports:
       - "3306:3306"
     networks:
@@ -45,6 +47,7 @@ services:
         DB_USER: ${DB_USER}
         DB_PASS: ${DB_PASS}
     container_name: wordpress
+    image: wordpress
     depends_on:
       - mariadb
     restart: always
@@ -58,13 +61,15 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: /Users/wolf/data/wordpress
+      #device: /Users/wolf/data/wordpress
+      device: /home/wolf/data/wordpress
 
   db-volume:
     driver_opts:
       o: bind
       type: none
-      device: /Users/wolf/data/mariadb
+      device: /home/wolf/data/mariadb
+      #device: /Users/wolf/data/mariadb
 
 networks:
     inception:
