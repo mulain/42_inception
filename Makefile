@@ -1,6 +1,9 @@
 NAME		=	inception
 DC-FILE		=	srcs/docker-compose.yml
 
+COLOR	= \033[30m
+RESET	= \033[0m
+
 all: makedirs
 	docker-compose -f $(DC-FILE) up -d
 
@@ -60,7 +63,7 @@ git:
 
 mgit:
 	git add .
-	@read -p "Enter the commit message: " halp; \
-	git commit -m "$$halp"
+	@read -p "Enter the commit message: " msg; \
+	git commit -m "$$msg"
 	git push
 	@echo "$(COLOR)git auto add & push with message performed.$(RESET)"
