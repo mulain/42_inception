@@ -1,0 +1,5 @@
+- pre config wordpress
+- find out make vs make re bug
+- find out args where necessary / move to env
+- remove echo bs where not necessary
+- make adaptable var for homepath linux / mac

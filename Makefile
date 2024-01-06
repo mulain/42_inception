@@ -51,3 +51,16 @@ nuke: down-v
 	docker system prune --all --force
 	sudo rm -rf ~/data/mariadb/*
 	sudo rm -rf ~/data/wordpress/*
+
+git:
+	git add .
+	git commit -m "auto add & push"
+	git push
+	@echo "$(COLOR)git auto add & push performed.$(RESET)"
+
+mgit:
+	git add .
+	@read -p "Enter the commit message: " halp; \
+	git commit -m "$$halp"
+	git push
+	@echo "$(COLOR)git auto add & push with message performed.$(RESET)"

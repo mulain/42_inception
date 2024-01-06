@@ -14,6 +14,8 @@ services:
     networks:
       - inception
     volumes:
+      # having these two container-volumes is not really useful. could just copy the files for this use case.
+      # kept it as a syntax example / reminder of this option
       - ./requirements/nginx/conf/:/etc/nginx/http.d/
       - ./requirements/nginx/tools:/etc/nginx/ssl/
       - wp-volume:/var/www/
