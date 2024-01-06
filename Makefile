@@ -39,7 +39,7 @@ rmvolumes:
 		docker volume rm -f $$VOLUMES; \
 	fi
 
-#this doesn't remove as much as in c make files; I find "make re" more akin to "--build" in the context of docker
+# this doesn't remove as much as in c make files; I find "make re" more akin to "--build" in the context of docker
 re: down-v build
 
 #this rule is only ok because we are in a virtual machine that only contains this project

@@ -10,7 +10,7 @@ services:
     depends_on:
       - wordpress
     ports:
-      - "443:443"
+      - 443:443
     networks:
       - inception
     volumes:
@@ -31,7 +31,7 @@ services:
     container_name: mariadb
     image: mariadb
     ports:
-      - "3306:3306"
+      - 3306:3306
     networks:
       - inception
     volumes:
@@ -58,18 +58,21 @@ services:
 
 volumes:
   wp-volume:
+    name: wp-volume
     driver_opts:
       o: bind
       type: none
-      #device: /Users/wolf/data/wordpress
-      device: /home/wolf/data/wordpress
+      # using a var here because docker compose is not interpreting "~" the way i am expecting it to.
+      # and i want to run on mac and linux, so the absolute homepath will be slightly different
+      # var is manually stored in .env for now, but would be more elegant to set in makefile and export to env. maybe later
+      device: ${HOMEPATH}/wordpress
 
   db-volume:
+    name: db-volume
     driver_opts:
       o: bind
       type: none
-      device: /home/wolf/data/mariadb
-      #device: /Users/wolf/data/mariadb
+      device: ${HOMEPATH}/mariadb
 
 networks:
     inception:
