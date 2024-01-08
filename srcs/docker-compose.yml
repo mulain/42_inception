@@ -22,14 +22,14 @@ services:
     restart: always
 
   mariadb:
-    build:
-      context: .
-      dockerfile: requirements/mariadb/Dockerfile
-      args:
-        DB_NAME: ${DB_NAME}
-        DB_USER: ${DB_USER}
-        DB_PASS: ${DB_PASS}
-        DB_ROOT: ${DB_ROOT}
+    build: ./requirements/mariadb
+      #context: .
+      #dockerfile: requirements/mariadb/Dockerfile
+      #args:
+       # DB_NAME: ${DB_NAME}
+        #DB_USER: ${DB_USER}
+        #DB_PASS: ${DB_PASS}
+        #DB_ROOT: ${DB_ROOT}
     container_name: mariadb
     image: mariadb
     ports:
